@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/presentation/screens/home_screen.dart';
+import 'package:my_news_app/presentation/screens/search_screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({Key? key, required this.index}) : super(key: key);
@@ -28,7 +29,9 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, SearchScreen.routeName);
+            },
             icon: const Icon(Icons.search),
           ),
           label: 'Discover',

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/model/article_model.dart';
+import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/presentation/screens/home_screen.dart';
+import 'package:my_news_app/presentation/screens/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +23,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
+        ArticleScreen.routeName: (context) => const ArticleScreen(),
+        SearchScreen.routeName: (context) => const SearchScreen()
       },
     );
   }

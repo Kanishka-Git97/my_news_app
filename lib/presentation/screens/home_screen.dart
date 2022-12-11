@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/controller/article_controller.dart';
 import 'package:my_news_app/presentation/molecules/bottom_nav_bar.dart';
+import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/repository/article_repository.dart';
 
 import '../../model/article_model.dart';
@@ -89,77 +90,63 @@ class _HomeScreenState extends State<HomeScreen> {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: 10,
                                       itemBuilder: (context, index) {
-                                        return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.5,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              (snapshot.data as List<
-                                                                          Article>)[
-                                                                      index]
-                                                                  .urlToImage
-                                                                  .toString()),
-                                                          fit: BoxFit.cover),
+                                        return InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                ArticleScreen.routeName,
+                                                arguments: (snapshot.data
+                                                    as List<Article>)[index]);
+                                          },
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.5,
+                                                      height: 100,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        image: DecorationImage(
+                                                            image: NetworkImage(
+                                                                (snapshot.data
+                                                                        as List<
+                                                                            Article>)[index]
+                                                                    .urlToImage
+                                                                    .toString()),
+                                                            fit: BoxFit.cover),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    (snapshot.data as List<
-                                                            Article>)[index]
-                                                        .title
-                                                        .toString(),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge!
-                                                        .copyWith(height: 1.5),
-                                                  ),
-                                                  Text(
-                                                      "${DateTime.now().difference(DateTime.parse((snapshot.data as List<Article>)[index].publishAt.toString())).inMinutes} Minutes ago"),
-                                                  TextButton(
-                                                      onPressed: () {},
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .zero),
-                                                      child: Row(
-                                                        children: [
-                                                          Text("Learn More",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodySmall!
-                                                                  .copyWith(
-                                                                      color: Colors
-                                                                          .black)),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          const Icon(Icons
-                                                              .arrow_circle_right),
-                                                        ],
-                                                      )),
-                                                ],
-                                              ),
-                                            ));
+                                                    Text(
+                                                      (snapshot.data as List<
+                                                              Article>)[index]
+                                                          .title
+                                                          .toString(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .copyWith(
+                                                              height: 1.5),
+                                                    ),
+                                                    Text(
+                                                        "${DateTime.now().difference(DateTime.parse((snapshot.data as List<Article>)[index].publishAt.toString())).inMinutes} minutes ago"),
+                                                  ],
+                                                ),
+                                              )),
+                                        );
                                       }),
                                 )
                               ],

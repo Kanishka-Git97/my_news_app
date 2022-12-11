@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_news_app/model/article_model.dart';
 import 'package:my_news_app/presentation/atoms/custom_tag.dart';
 
+import '../screens/article_screen.dart';
+
 class ImageContainer extends StatelessWidget {
   const ImageContainer({Key? key, required this.article, this.child})
       : super(key: key);
@@ -22,7 +24,7 @@ class ImageContainer extends StatelessWidget {
       ),
       child: ContainerContent(
         article: article,
-        tag: "Last News of the Day",
+        tag: "Latest News of the Day",
       ),
     );
   }
@@ -54,7 +56,10 @@ class ContainerContent extends StatelessWidget {
                 color: Colors.white,
                 height: 1.25)),
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, ArticleScreen.routeName,
+                  arguments: article);
+            },
             style: TextButton.styleFrom(padding: EdgeInsets.zero),
             child: Row(
               children: [
