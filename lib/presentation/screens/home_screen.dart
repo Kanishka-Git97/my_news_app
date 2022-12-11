@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/controller/article_controller.dart';
-import 'package:my_news_app/presentation/moleculars/bottom_nav_bar.dart';
+import 'package:my_news_app/presentation/molecules/bottom_nav_bar.dart';
 import 'package:my_news_app/repository/article_repository.dart';
 
 import '../../model/article_model.dart';
-import '../moleculars/image_container.dart';
+import '../molecules/image_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
