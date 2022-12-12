@@ -3,14 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:my_news_app/model/category_model.dart';
 import 'package:my_news_app/presentation/molecules/bottom_nav_bar.dart';
+import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/provider/article_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../atoms/custom_input.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  SearchScreen({Key? key}) : super(key: key);
   static const routeName = '/search';
+  //Controllers
+  final _searchController = TextEditingController();
   static List<Category> categories = [
     Category(
         flag: "business",
@@ -76,6 +79,7 @@ class SearchScreen extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
+                controller: _searchController,
                 onChanged: (value) {
                   print(value);
                   context.read<ArticleModel>().searchArticles(value);
@@ -125,44 +129,53 @@ class SearchScreen extends StatelessWidget {
           itemCount: articles.length,
           itemBuilder: (context, index) {
             final article = articles[index];
-            return Row(
-              children: [
-                Container(
-                  height: 80,
-                  width: 80,
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    image: DecorationImage(
-                        image: NetworkImage("${article.urlToImage}"),
-                        fit: BoxFit.cover),
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  ArticleScreen.routeName,
+                  arguments: article,
+                );
+              },
+              child: Row(
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      image: DecorationImage(
+                          image: NetworkImage("${article.urlToImage}"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        article.title.toString(),
-                        maxLines: 2,
-                        overflow: TextOverflow.clip,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.schedule),
-                          Text(
-                              " ${DateTime.now().difference(DateTime.parse(article.publishAt.toString())).inHours} hours ago"),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          article.title.toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.clip,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.schedule),
+                            Text(
+                                " ${DateTime.now().difference(DateTime.parse(article.publishAt.toString())).inHours} hours ago"),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             );
           },
         ),
@@ -178,6 +191,7 @@ class SearchScreen extends StatelessWidget {
           return InkWell(
             onTap: () {
               context.read<ArticleModel>().setArticles(list[index].flag);
+              _searchController.clear();
             },
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 5),

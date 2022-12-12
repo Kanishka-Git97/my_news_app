@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         ArticleScreen.routeName: (context) => const ArticleScreen(),
-        SearchScreen.routeName: (context) => const SearchScreen()
+        SearchScreen.routeName: (context) => SearchScreen()
       },
     );
   }

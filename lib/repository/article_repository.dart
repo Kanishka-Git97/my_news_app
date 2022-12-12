@@ -26,7 +26,7 @@ class ArticleRepository implements ArticleService {
   @override
   Future<List<Article>> getArticlesByCategory(query) async {
     Response res = await get(Uri.parse(
-        "https://newsapi.org/v2/top-headlines?category=$query&apiKey=3ab1e3fb702c4d67aba741c251d22d60"));
+        "https://newsapi.org/v2/top-headlines?category=$query&apiKey=62224834af934ee4986281adfbbf65eb"));
     if (res.statusCode == 200) {
       Map<String, dynamic> json = jsonDecode(res.body);
       List<dynamic> body = json["articles"];

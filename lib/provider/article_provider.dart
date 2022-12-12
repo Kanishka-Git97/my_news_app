@@ -13,6 +13,7 @@ class ArticleModel extends ChangeNotifier {
   HomeState _homeState = HomeState.Initial;
 
   List<Article> _articles = [];
+  List<Article> _temp = [];
 
   HomeState get homeState => _homeState;
   List<Article> get articles => _articles;
@@ -23,6 +24,7 @@ class ArticleModel extends ChangeNotifier {
       _homeState = HomeState.Loaded;
       final articles = await _articleController.getArticlesByCategory(query);
       _articles = articles;
+      _temp = articles;
     } catch (e) {
       _homeState = HomeState.Error;
     }
@@ -33,7 +35,7 @@ class ArticleModel extends ChangeNotifier {
     _homeState = HomeState.Loading;
     try {
       _homeState = HomeState.Loaded;
-      final results = _articles
+      final results = _temp
           .where((element) => element.content!
               .toLowerCase()
               .contains(keyword.toString().toLowerCase()))
