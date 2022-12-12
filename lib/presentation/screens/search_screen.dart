@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:my_news_app/model/category_model.dart';
 import 'package:my_news_app/presentation/molecules/bottom_nav_bar.dart';
+import 'package:my_news_app/provider/article_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../atoms/custom_input.dart';
 
@@ -48,6 +50,7 @@ class SearchScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    context.read<ArticleModel>().setArticles("business");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -72,20 +75,99 @@ class SearchScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const CustomInput(
-                icon: Icons.search,
-                hint: "Search",
+              TextFormField(
+                onChanged: (value) {
+                  print(value);
+                  context.read<ArticleModel>().searchArticles(value);
+                },
+                decoration: InputDecoration(
+                    hintText: "Search",
+                    fillColor: Colors.grey.shade200,
+                    filled: true,
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none)),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               _categoryList(categories),
-              
+              const SizedBox(
+                height: 10,
+              ),
+              _resultList()
             ],
-          )
+          ),
         ],
       ),
     );
+  }
+
+  _resultList() {
+    return Builder(builder: (context) {
+      var _state = context.watch<ArticleModel>().homeState;
+      if (_state == HomeState.Loading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      if (_state == HomeState.Error) {
+        return const Center(child: Text("An Error Occurred!"));
+      }
+      final articles = context.watch<ArticleModel>().articles;
+      return SizedBox(
+        height: 300,
+        child: ListView.builder(
+          itemCount: articles.length,
+          itemBuilder: (context, index) {
+            final article = articles[index];
+            return Row(
+              children: [
+                Container(
+                  height: 80,
+                  width: 80,
+                  margin: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                        image: NetworkImage("${article.urlToImage}"),
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        article.title.toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.clip,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.schedule),
+                          Text(
+                              " ${DateTime.now().difference(DateTime.parse(article.publishAt.toString())).inHours} hours ago"),
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            );
+          },
+        ),
+      );
+    });
   }
 
   _categoryList(List<Category> list) {
@@ -94,7 +176,9 @@ class SearchScreen extends StatelessWidget {
       child: ListView.builder(
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              context.read<ArticleModel>().setArticles(list[index].flag);
+            },
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 5),
               width: MediaQuery.of(context).size.width * 0.35,

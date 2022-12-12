@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/controller/article_controller.dart';
 import 'package:my_news_app/model/article_model.dart';
 import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/presentation/screens/home_screen.dart';
 import 'package:my_news_app/presentation/screens/search_screen.dart';
+import 'package:my_news_app/provider/article_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ArticleModel(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

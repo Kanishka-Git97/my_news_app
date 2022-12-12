@@ -9,4 +9,8 @@ class ArticleController {
   Future<List<Article>> getArticles() {
     return service.getArticles();
   }
+
+  Future<List<Article>> getArticlesByCategory(query) {
+    return service.getArticlesByCategory(query);
+  }
 }

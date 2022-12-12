@@ -19,7 +19,22 @@ class ArticleRepository implements ArticleService {
           body.map((dynamic item) => Article.fromJson(item)).toList();
       return articles;
     } else {
-     throw("Can't get the Articles");
+      throw ("Can't get the Articles");
+    }
+  }
+
+  @override
+  Future<List<Article>> getArticlesByCategory(query) async {
+    Response res = await get(Uri.parse(
+        "https://newsapi.org/v2/top-headlines?category=$query&apiKey=3ab1e3fb702c4d67aba741c251d22d60"));
+    if (res.statusCode == 200) {
+      Map<String, dynamic> json = jsonDecode(res.body);
+      List<dynamic> body = json["articles"];
+      List<Article> articles =
+          body.map((dynamic item) => Article.fromJson(item)).toList();
+      return articles;
+    } else {
+      throw ("Can't get the Articles");
     }
   }
 }
