@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/controller/article_controller.dart';
 import 'package:my_news_app/model/article_model.dart';
+import 'package:my_news_app/presentation/screens/all_article_screen.dart';
 import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/presentation/screens/home_screen.dart';
 import 'package:my_news_app/presentation/screens/search_screen.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         ArticleScreen.routeName: (context) => const ArticleScreen(),
-        SearchScreen.routeName: (context) => SearchScreen()
+        SearchScreen.routeName: (context) => SearchScreen(),
+        AllArticlesScreen.routeName: (context) => const AllArticlesScreen()
       },
     );
   }

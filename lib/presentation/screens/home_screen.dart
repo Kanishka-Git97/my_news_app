@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/controller/article_controller.dart';
 import 'package:my_news_app/presentation/molecules/bottom_nav_bar.dart';
+import 'package:my_news_app/presentation/screens/all_article_screen.dart';
 import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/repository/article_repository.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/article_model.dart';
+import '../../provider/article_provider.dart';
 import '../molecules/image_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,10 +79,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .copyWith(
                                               fontWeight: FontWeight.bold),
                                     ),
-                                    Text('More',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge),
+                                    GestureDetector(
+                                      onTap: () {
+                                        context
+                                            .read<ArticleModel>()
+                                            .searchAll("all");
+                                        Navigator.pushNamed(context,
+                                            AllArticlesScreen.routeName);
+                                      },
+                                      child: Text('More',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(

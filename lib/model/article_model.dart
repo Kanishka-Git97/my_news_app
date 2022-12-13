@@ -7,7 +7,7 @@ class Article {
   String? description;
   String? url;
   String? urlToImage;
-  String? publishAt;
+  String publishAt;
   String? content;
 
   Article(
@@ -17,7 +17,7 @@ class Article {
       this.description,
       this.url,
       this.urlToImage,
-      this.publishAt,
+      required this.publishAt,
       this.content});
 
   factory Article.fromJson(Map<String, dynamic> json) {

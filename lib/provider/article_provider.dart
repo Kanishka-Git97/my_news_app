@@ -46,4 +46,29 @@ class ArticleModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  bool sortingSlug = false;
+  void sort() {
+    sortingSlug = !sortingSlug;
+    if (sortingSlug == false) {
+      _articles.sort((a, b) => DateTime.parse(a.publishAt.toString())
+          .compareTo(DateTime.parse(b.publishAt.toString())));
+    } else {
+      _articles.sort((a, b) => DateTime.parse(b.publishAt.toString())
+          .compareTo(DateTime.parse(a.publishAt.toString())));
+    }
+    notifyListeners();
+  }
+
+  void searchAll(keyword) async {
+    _homeState = HomeState.Loading;
+    try {
+      final response = await _articleController.getArticlesByKeyword(keyword);
+      _articles = response;
+      _homeState = HomeState.Loaded;
+    } catch (e) {
+      _homeState = HomeState.Error;
+    }
+    notifyListeners();
+  }
 }

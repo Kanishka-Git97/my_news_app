@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/model/source_model.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../model/article_model.dart';
 import '../atoms/custom_tag.dart';
@@ -63,6 +64,7 @@ class _newsBody extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomTag(children: [
                 const SizedBox(
@@ -77,8 +79,14 @@ class _newsBody extends StatelessWidget {
                         .copyWith(color: Colors.white)),
               ], backgroundColor: Colors.black),
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.ads_click_sharp))
+                  onPressed: () {
+                    Share.share("${article.url}");
+                  },
+                  icon: const Icon(Icons.share))
             ],
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Column(
             children: [

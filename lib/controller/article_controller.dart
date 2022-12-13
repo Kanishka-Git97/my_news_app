@@ -13,4 +13,8 @@ class ArticleController {
   Future<List<Article>> getArticlesByCategory(query) {
     return service.getArticlesByCategory(query);
   }
+
+  Future<List<Article>> getArticlesByKeyword(keyword) {
+    return service.getArticlesByKeyword(keyword);
+  }
 }
