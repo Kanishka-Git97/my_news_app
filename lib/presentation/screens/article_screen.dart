@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:my_news_app/model/source_model.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -45,13 +46,26 @@ class ArticleScreen extends StatelessWidget {
 }
 
 class _newsBody extends StatelessWidget {
-  const _newsBody({Key? key, required this.source, required this.article})
+  _newsBody({Key? key, required this.source, required this.article})
       : super(key: key);
 
   final Source source;
   final Article article;
+  final FlutterTts speaker = FlutterTts();
+  bool speach = false;
   @override
   Widget build(BuildContext context) {
+    Future _speack(String note) async {
+      if (speach == false) {
+        speach = !speach;
+        await speaker.setLanguage("en-US");
+        await speaker.setPitch(1);
+        await speaker.speak(note);
+      } else {
+        await speaker.stop();
+      }
+    }
+
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: const BoxDecoration(
@@ -66,18 +80,29 @@ class _newsBody extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomTag(children: [
-                const SizedBox(
-                    height: 30,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.blueGrey,
-                    )),
-                Text(source.name.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: Colors.white)),
-              ], backgroundColor: Colors.black),
+              Row(
+                children: [
+                  CustomTag(children: [
+                    const SizedBox(
+                        height: 30,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.blueGrey,
+                        )),
+                    Text(source.name.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.white)),
+                  ], backgroundColor: Colors.black),
+                  IconButton(
+                    icon: const Icon(Icons.record_voice_over),
+                    onPressed: () {
+                      _speack(
+                          " ${article.title.toString()} ${article.description.toString()}   ${article.content.toString()}");
+                    },
+                  )
+                ],
+              ),
               IconButton(
                   onPressed: () {
                     Share.share("${article.url}");
