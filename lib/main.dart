@@ -5,6 +5,7 @@ import 'package:my_news_app/presentation/screens/all_article_screen.dart';
 import 'package:my_news_app/presentation/screens/article_screen.dart';
 import 'package:my_news_app/presentation/screens/home_screen.dart';
 import 'package:my_news_app/presentation/screens/search_screen.dart';
+import 'package:my_news_app/presentation/screens/splash_screen.dart';
 import 'package:my_news_app/provider/article_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -27,12 +28,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      initialRoute: '/',
+      initialRoute: '/splash',
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
-        AllArticlesScreen.routeName: (context) => const AllArticlesScreen()
+        AllArticlesScreen.routeName: (context) => const AllArticlesScreen(),
+        SplashScreen.routeName: (context) => const SplashScreen()
       },
     );
   }

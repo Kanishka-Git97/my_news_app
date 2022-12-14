@@ -37,11 +37,19 @@ dependencies:
   http: ^0.13.5
   provider: ^6.0.4
   share_plus: ^4.5.3
+  flutter_launcher_icons: ^0.11.0
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons: 
+  android: true
+  image_path: "assets/images/news-logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo-foreground.png"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -56,14 +64,16 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/news-logo.png
+    - assets/images/logo-foreground.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

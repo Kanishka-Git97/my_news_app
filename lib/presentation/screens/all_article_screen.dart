@@ -86,7 +86,7 @@ class AllArticlesScreen extends StatelessWidget {
       }
       final articles = context.watch<ArticleModel>().articles;
       return SizedBox(
-        height: 300,
+        height: 400,
         child: ListView.builder(
           itemCount: articles.length,
           itemBuilder: (context, index) {
